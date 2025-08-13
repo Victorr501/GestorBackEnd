@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlachemy.orm import Session
+from sqlalchemy.orm import Session
 from app.schemas.user import UserCreate, User as UserSchema
 from app.services import user as user_service
 from app.db.database import SessionLocal, engine, Base

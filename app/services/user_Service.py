@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.user import User as UserModel
-from app.schemas.user import UserCreate
+from app.schemas.user_schemas import UserCreate
 from passlib.context import CryptContext
 
 #Intancia para gestionar el hashing de contraseñas
@@ -21,3 +21,9 @@ def create_user(db: Session, user: UserCreate):
     db.commit()
     db.refresh(db_user) # Actualiza el objeto para que tenga el ID generado
     return db_user
+
+"""
+Coge un usuario por el correo
+"""
+def get_user_by_email(db: Session, email: str):
+    return db.query(UserModel).filter(UserModel.email == email).first()

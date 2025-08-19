@@ -6,5 +6,6 @@ class User(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     #Se especfica una longitud para el tipo de String en MySQL
+    name = Column(String(225))
     email = Column(String(225), unique=True, index=True)
     hashed_password = Column(String(225))

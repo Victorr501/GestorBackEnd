@@ -16,3 +16,8 @@ class User(BaseModel):
     
     class Config:
         from_attributes = True
+        
+#Esquema para el inicio de sesión
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str

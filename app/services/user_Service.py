@@ -27,3 +27,9 @@ Coge un usuario por el correo
 """
 def get_user_by_email(db: Session, email: str):
     return db.query(UserModel).filter(UserModel.email == email).first()
+
+"""
+Verificar la contraseña
+"""
+def verfy_password(plain_password, hashed_password):
+    return pws_context.verify(plain_password, hashed_password)

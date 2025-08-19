@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from app.schemas.user_schemas import UserCreate, User as UserSchema
+from app.schemas.user_schemas import UserCreate, User, UserLogin
 from app.services import user_Service as user_service
 from app.db.database import SessionLocal, engine, Base
 from app.models import user as user_model
@@ -17,7 +17,7 @@ def get_db():
     finally:
         db.close()
         
-@router.post("/", response_model=UserSchema, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=User, status_code=status.HTTP_201_CREATED)
 def create_user_endpoint(user: UserCreate, db: Session = Depends(get_db)):
     """
     Endpoint para registrar un nuevo usuario
@@ -30,4 +30,18 @@ def create_user_endpoint(user: UserCreate, db: Session = Depends(get_db)):
     
     #LLama a la función del servicio para crear el usuario en la base de datos
     db_user = user_service.create_user(db=db, user=user)
+    return db_user
+
+
+#Para el login del usuario y poder entrar a la apliacion
+@router.post("/login", response_model=User)
+def login_user(user: UserLogin, db: Session = Depends(get_db)):
+    db_user = user_service.get_user_by_email(db, email=user.email)
+    
+    if not db_user:
+        raise HTTPException(status_code=401, detail="Credenciales incorrectas")
+    
+    if not user_service.verfy_password(user.password, db_user.hashed_password):
+        raise HTTPException(status_code=401, detail="Credenciales incorrectas")
+    
     return db_user

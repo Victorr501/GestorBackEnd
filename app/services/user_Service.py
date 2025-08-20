@@ -13,7 +13,7 @@ def create_user(db: Session, user: UserCreate):
     #Encripta la contraseña antes de gardarla
     hashed_password = get_password_hash(user.password)
     #Crea una instancia del modelo de SQLAlchemy
-    db_user = UserModel(email=user.email, hashed_password=hashed_password)
+    db_user = UserModel(email=user.email, hashed_password=hashed_password, name =user.name)
     
     
     #Añade el objeto a la sesión y lo garda en la base de datos

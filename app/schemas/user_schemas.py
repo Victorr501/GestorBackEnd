@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from typing import Optional
 
 #Esquema para crear un nuevo usuario
 #Lo que el frontedn envai al backend
@@ -21,3 +22,8 @@ class User(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+    
+# Esquema para actualizar el usuario (solo nombre y email)
+class UserUpdate(BaseModel):
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None

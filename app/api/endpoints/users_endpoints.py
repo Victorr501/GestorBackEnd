@@ -47,7 +47,7 @@ def login_user(user: UserLogin, db: Session = Depends(get_db)):
     return db_user
 
 #Para actualizar los parametro del usuario
-@router.patch("/actualizar/{user_id}", response_model=UserCreate)
+@router.patch("/actualizar/{user_id}", response_model=User)
 def update_user(user_id: int, user: UserUpdate, db: Session = Depends(get_db)):
     db_user = user_service.update_user(db=db,user=user,id=user_id )
     

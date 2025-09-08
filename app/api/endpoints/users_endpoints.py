@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from app.schemas.user_schemas import UserCreate, User, UserLogin, UserUpdate
+from app.schemas.user_schemas import UserCreate, User, UserLogin, UserUpdate, UserUpdatePassword
 from app.services import user_Service as user_service
 from app.db.database import SessionLocal, engine, Base
 from app.models import user as user_model
@@ -50,6 +50,16 @@ def login_user(user: UserLogin, db: Session = Depends(get_db)):
 @router.patch("/actualizar/{user_id}", response_model=User)
 def update_user(user_id: int, user: UserUpdate, db: Session = Depends(get_db)):
     db_user = user_service.update_user(db=db,user=user,id=user_id )
+    
+    if not db_user:
+        raise HTTPException(status_code=401, detail="Error al actualizar el usuario")
+    
+    return db_user
+
+#Para actualizar la contraseña del usuario
+@router.patch("/actualizar/contrasena/{user_id}", response_model=User)
+def update_user_password(user_id: int, user: UserUpdatePassword, db: Session = Depends(get_db)):
+    db_user = user_service.update_user_password(db=db, user=user, id=user_id)
     
     if not db_user:
         raise HTTPException(status_code=401, detail="Error al actualizar el usuario")

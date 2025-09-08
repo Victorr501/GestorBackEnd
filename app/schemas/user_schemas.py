@@ -27,3 +27,7 @@ class UserLogin(BaseModel):
 class UserUpdate(BaseModel):
     name: Optional[str] = None
     email: Optional[EmailStr] = None
+    
+# Equema para actualizar el usaurio (contraseña)
+class UserUpdatePassword(BaseModel):
+    password : Optional[str] = None

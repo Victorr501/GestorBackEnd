@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.user import User as UserModel
-from app.schemas.user_schemas import UserCreate, UserUpdate
+from app.schemas.user_schemas import UserCreate, UserUpdate, UserUpdatePassword
 from passlib.context import CryptContext
 
 #Intancia para gestionar el hashing de contraseñas
@@ -55,4 +55,24 @@ def update_user(db: Session, user: UserUpdate, id: int):
     db.refresh(db_user)
     
     #Devuelve el objeto de usuario actualizado
+    return db_user
+
+"""
+Actualizar parametro de usaurio
+"""
+def update_user_password(db: Session, user: UserUpdatePassword, id: int):
+    db_user = db.query(UserModel).filter(UserModel.id == id).first()
+    
+    if not db_user:
+        return None
+    
+    #Actualizar los pareametro de este usario
+    if user.password is not None:
+        newPassword = get_password_hash(user.password)
+        db_user.hashed_password = newPassword
+        
+    #Guardar los cambios en la base de datos
+    db.commit()
+    db.refresh(db_user)
+    
     return db_user

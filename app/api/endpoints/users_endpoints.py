@@ -65,5 +65,14 @@ def update_user_password(user_id: int, user: UserUpdatePassword, db: Session = D
         raise HTTPException(status_code=401, detail="Error al actualizar el usuario")
     
     return db_user
+
+#Para eliminar el usuario por la id
+@router.delete("/eliminar/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = user_service.delete_user(db=db, id=user_id)
     
+    if not db_user:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    
+    return db_user
     

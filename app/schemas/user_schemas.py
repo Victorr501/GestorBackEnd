@@ -31,3 +31,4 @@ class UserUpdate(BaseModel):
 # Equema para actualizar el usaurio (contraseña)
 class UserUpdatePassword(BaseModel):
     password : Optional[str] = None
+    

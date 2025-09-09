@@ -76,3 +76,20 @@ def update_user_password(db: Session, user: UserUpdatePassword, id: int):
     db.refresh(db_user)
     
     return db_user
+
+"""
+Eliminar el usuario
+"""
+def delete_user(db: Session, id: int):
+    #Busca al usuario en la base de datos
+    db_user = db.query(UserModel).filter(UserModel.id == id).first()
+    
+    #Si no lo encuentra devuelve nada y no elimina nada
+    if not db_user:
+        return None
+    
+    db.delete(db_user)
+    db.commit()
+    
+    #Devuelve el usuario
+    return db_user

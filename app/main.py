@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from app.api.endpoints import users_endpoints #Importa tu modelo de endpoints de suaurios
 from app.db.database import Base, engine #Importa la base de datos y el motor de SQLAlchemy
+
+#Esto se importa para create_all sepa que modelos cargar
 from app.models import user as user_model #Importa el modelo de usaurio par aque SQLAlchemy lo conozca
+from app.models import token as tokens_model
 
 #Crear la instancia de la aplicacion FastAPI
 app = FastAPI()

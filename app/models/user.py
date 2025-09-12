@@ -12,4 +12,4 @@ class User(Base):
     hashed_password = Column(String(225))
     
     #Relación 1 a n: un usuario puede tener varios tokens
-    tokens = relationship("Toke", back_populates="user", cascade="all, delte-orphan")
+    tokens = relationship("Token", back_populates="user", cascade="all, delete-orphan")

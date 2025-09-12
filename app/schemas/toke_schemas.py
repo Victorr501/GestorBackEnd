@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import Optional
 
@@ -19,3 +19,6 @@ class TokenResponse(BaseModel):
     
     class Config:
         orm_mode = True
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr

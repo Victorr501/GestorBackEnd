@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.endpoints import users_endpoints #Importa tu modelo de endpoints de suaurios
+from app.api.endpoints import users_endpoints, toke_endpoints #Importa tu modelo de endpoints de suaurios
 from app.db.database import Base, engine #Importa la base de datos y el motor de SQLAlchemy
 
 #Esto se importa para create_all sepa que modelos cargar
@@ -23,6 +23,7 @@ def create_db_tables():
     
 #EndPoints
 #endpoints de usuarios
+app.include_router(users_endpoints.router, prefix="/api/v1")
 app.include_router(users_endpoints.router, prefix="/api/v1")
 
 #endpoint ráiz

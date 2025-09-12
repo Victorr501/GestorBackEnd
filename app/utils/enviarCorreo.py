@@ -8,8 +8,8 @@ def send_email(to_email: str, body: str, subject: str):
     #Estos datos son el correo de la "empresa"
     SMTP_SERVER = "smtp.gmail.com"
     SMTP_PORT = 587
-    FROM_EMAIL = ""
-    PASSWORD = ""
+    FROM_EMAIL = "victorpruebas501@gmail.com"
+    PASSWORD = "Vr-080105"
     
     #Crear el mensaje
     msg = MIMEMultipart()

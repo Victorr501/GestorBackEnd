@@ -24,7 +24,7 @@ def create_db_tables():
 #EndPoints
 #endpoints de usuarios
 app.include_router(users_endpoints.router, prefix="/api/v1")
-app.include_router(users_endpoints.router, prefix="/api/v1")
+app.include_router(toke_endpoints.router, prefix="/api/v1")
 
 #endpoint ráiz
 @app.get("/")

@@ -10,11 +10,11 @@ def create_token(db:Session, user_id: int, hours_valid: int = 1 ) -> Token:
     db_token = Token(
         token=token_str,
         user_id=user_id,
-        expirex_at = datetime.now(timezone.utc) + timedelta(hours=hours_valid)
+        expires_at = datetime.now(timezone.utc) + timedelta(hours=hours_valid)
     )
     
     db.add(db_token)
-    db.commit
+    db.commit()
     db.refresh(db_token) #refrescar para obtener ID generado
     
     return db_token

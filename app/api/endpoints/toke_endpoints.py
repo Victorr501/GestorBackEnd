@@ -19,9 +19,9 @@ def get_db():
     finally:
         db.close()
         
-@router.post("/enviarRecuperacion/{email}")
+@router.post("/enviarRecuperacion")
 def forgot_password(request: ForgotPasswordRequest, db:Session = Depends(get_db)):
-    db_user = user_Service.get_user_by_email(db, ForgotPasswordRequest.email)
+    db_user = user_Service.get_user_by_email(db, request.email)
     
     if not db_user:
         return {"detail": "Si el correo existe, se enviará un enlace de recuperacion"}
@@ -29,7 +29,7 @@ def forgot_password(request: ForgotPasswordRequest, db:Session = Depends(get_db)
     token = token_service.create_token(db=db, user_id=db_user.id)
     
     #ALERTA CONTINUAR POR AQUI
-    enlace = f"?token={token.token}"
+    enlace = f"http://localhost:5500/cambiarContraseña/cambiarContraseña.html?token={token.token}"
     
     
     #Esto envia el correo para que pueda recuperar la contraseaña

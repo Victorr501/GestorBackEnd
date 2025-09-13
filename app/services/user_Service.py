@@ -77,6 +77,25 @@ def update_user_password(db: Session, user: UserUpdatePassword, id: int):
     
     return db_user
 
+
+"""
+Actualizar parametro de usuario para token
+"""
+def update_user_password_token(db: Session, password: str, id, int):
+    db_user = db.query(UserModel).filter(UserModel.id == id).first()
+    
+    if not db_user:
+        return None
+    
+    if password is not None:
+        newPassword = get_password_hash(password)
+        db_user.hashed_password = newPassword
+        
+    db.commit()
+    db.refresh(db_user)
+    
+    return db_user
+
 """
 Eliminar el usuario
 """

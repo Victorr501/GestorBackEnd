@@ -22,3 +22,7 @@ class TokenResponse(BaseModel):
 
 class ForgotPasswordRequest(BaseModel):
     email: EmailStr
+    
+class Recuperacion(BaseModel):
+    password: str
+    token: str

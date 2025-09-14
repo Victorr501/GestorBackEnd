@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.api.endpoints import users_endpoints, toke_endpoints #Importa tu modelo de endpoints de suaurios
 from app.db.database import Base, engine #Importa la base de datos y el motor de SQLAlchemy
+from fastapi.middleware.cors import CORSMiddleware
 
 #Esto se importa para create_all sepa que modelos cargar
 from app.models import user as user_model #Importa el modelo de usaurio par aque SQLAlchemy lo conozca
@@ -26,7 +27,17 @@ def create_db_tables():
 app.include_router(users_endpoints.router, prefix="/api/v1")
 app.include_router(toke_endpoints.router, prefix="/api/v1")
 
+#Permite las peticiones de todos los puerto a traves del navegador
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # el origen de tu frontend
+    allow_credentials=True,
+    allow_methods=["*"],   # o restringe a ["POST"]
+    allow_headers=["*"],
+)
+
 #endpoint ráiz
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the GestorBackEnd API"}
+

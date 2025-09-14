@@ -71,4 +71,4 @@ def recuperacion(request: Recuperacion, db: Session = Depends(get_db)):
     if salio_bien is False:
         raise HTTPException(status_code=403, detail="Error al eliminar token")
     
-    return {"successs": True, "mensaje":"La contraseña se ha actualizado correctamente"}
+    return {"success": True, "mensaje":"La contraseña se ha actualizado correctamente"}

@@ -54,14 +54,21 @@ Este lo que hace es verificar los datos, ya actualizar la contraseña usando el 
 def recuperacion(request: Recuperacion, db: Session = Depends(get_db)):
     db_token = token_service.get_toke_by_string(db=db, token_str=request.token)
     
+    if db_token is None:
+        raise HTTPException(status_code=401, detail="No ha encontrado el token")
+    
     if not verificar_token(db_token):
         raise HTTPException(status_code=400, detail="Token expirado")
 
     db_user = user_Service.update_user_password_token(db=db, password=request.password, id=db_token.user_id)
     
     if not db_user:
-        raise HTTPException(status_code=404, detail="Error al actualizar el usuario")
+      raise HTTPException(status_code=404, detail="Error al actualizar el usuario")
     
-    token_service.delete_token(db=db, token=db_token)
+    salio_bien = token_service.delete_token(db=db, token=db_token)
+    
+    
+    if salio_bien is False:
+        raise HTTPException(status_code=403, detail="Error al eliminar token")
     
     return {"successs": True, "mensaje":"La contraseña se ha actualizado correctamente"}

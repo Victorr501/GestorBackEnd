@@ -81,7 +81,7 @@ def update_user_password(db: Session, user: UserUpdatePassword, id: int):
 """
 Actualizar parametro de usuario para token
 """
-def update_user_password_token(db: Session, password: str, id, int):
+def update_user_password_token(db: Session, password: str, id: int):
     db_user = db.query(UserModel).filter(UserModel.id == id).first()
     
     if not db_user:

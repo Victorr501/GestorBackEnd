@@ -20,8 +20,11 @@ def create_token(db:Session, user_id: int, hours_valid: int = 1 ) -> Token:
     return db_token
 
 def delete_token(db: Session, token: Token):
+    if token is None:
+        return False
     db.delete(token)
-    db.commit
+    db.commit()
+    return True
     
 def get_toke_by_string(db: Session, token_str: str):
     return db.query(Token).filter(Token.token == token_str).first()

@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 #Esto se importa para create_all sepa que modelos cargar
 from app.models import user as user_model #Importa el modelo de usaurio par aque SQLAlchemy lo conozca
 from app.models import token as tokens_model
+from app.models import calendario as calendario_model
 
 #Crear la instancia de la aplicacion FastAPI
 app = FastAPI()

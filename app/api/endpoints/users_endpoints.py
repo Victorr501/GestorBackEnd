@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.schemas.user_schemas import UserCreate, User, UserLogin, UserUpdate, UserUpdatePassword
 from app.services import user_Service as user_service
+from app.services import calendario_service 
 from app.db.database import SessionLocal, engine, Base
 from app.models import user as user_model
 
@@ -28,8 +29,16 @@ def create_user_endpoint(user: UserCreate, db: Session = Depends(get_db)):
     if db_user:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="El email ya está registrado")
     
+    
     #LLama a la función del servicio para crear el usuario en la base de datos
     db_user = user_service.create_user(db=db, user=user)
+    
+    db_calendario = calendario_service.create_calendario(db, db_user.id)
+    
+    #Crea directamente la 
+    if db_calendario is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Error en el servidor")
+    
     return db_user
 
 
@@ -74,5 +83,13 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     if not db_user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
     
-    return db_user
+    db_calendario = calendario_service.find_by_user_id(db, user_id=db_user.id)
+    
+    if not db_calendario:
+        return {"message": f"Usaurio {user_id} eliminado correctament"}
+    
+    db_calendario = calendario_service.delete_calendario(db,calendario= db_calendario)
+    
+    return {"message": f"Usaurio {user_id} eliminado correctament"}
+    
     

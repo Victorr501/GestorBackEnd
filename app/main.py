@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.endpoints import users_endpoints, toke_endpoints #Importa tu modelo de endpoints de suaurios
+from app.api.endpoints import users_endpoints, toke_endpoints, calendario_enpoints, categoria_eventos_enpoints #Importa tu modelo de endpoints de suaurios
 from app.db.database import Base, engine #Importa la base de datos y el motor de SQLAlchemy
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.models import user as user_model #Importa el modelo de usaurio par aque SQLAlchemy lo conozca
 from app.models import token as tokens_model
 from app.models import calendario as calendario_model
+from app.models import categoria_eventos as categorias_eventos
 
 #Crear la instancia de la aplicacion FastAPI
 app = FastAPI()
@@ -27,6 +28,8 @@ def create_db_tables():
 #endpoints de usuarios
 app.include_router(users_endpoints.router, prefix="/api/v1")
 app.include_router(toke_endpoints.router, prefix="/api/v1")
+app.include_router(calendario_enpoints.router, prefix="/api/v1")
+app.include_router(calendario_enpoints.router, prefix="/api/v1")
 
 #Permite las peticiones de todos los puerto a traves del navegador
 app.add_middleware(

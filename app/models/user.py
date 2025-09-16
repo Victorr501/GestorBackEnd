@@ -14,3 +14,7 @@ class User(Base):
     #Relación 1 a n: un usuario puede tener varios tokens
     tokens = relationship("Token", back_populates="user", cascade="all, delete-orphan")
     calendario = relationship("Calendario", back_populates="user", uselist=False, cascade="all, delete-orphan")
+    
+    @property
+    def calendario_id(self):
+        return self.calendario.id if self.calendario else None

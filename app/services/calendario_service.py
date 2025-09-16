@@ -24,3 +24,8 @@ def find_by_user_id(db: Session, user_id: int):
 def delete_calendario(db: Session, calendario: Calendario):
     db.delete(calendario)
     db.commit()
+    
+#buscar el calendario por el id
+def get_by_ID(db: Session, id: int):
+    return db.query(Calendario).filter(Calendario.id == id).first()
+

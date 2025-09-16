@@ -14,6 +14,8 @@ class User(BaseModel):
     id: int
     name: str
     email: EmailStr
+    calendario_id: Optional[int] #devuelve solo si existe el id del calendario
+    
     
     class Config:
         from_attributes = True
